@@ -36,10 +36,10 @@
         app:layout_constraintVertical_bias="0.062" />
 
     <TextView
-        android:id="@+id/textWelcome"
+        android:id="@+id/texLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WELCOME"
+        android:text="Login Screen"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/editUser"
@@ -52,9 +52,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LOGIN"
+        android:onClick="valid"
         android:textAlignment="center"
         android:textColorLink="#009688"
-        android:onClick="checkCredentials"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

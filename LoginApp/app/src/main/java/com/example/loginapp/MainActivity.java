@@ -1,18 +1,16 @@
 package com.example.loginapp;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,29 +22,34 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        EditText userId = (EditText) findViewById(R.id.editUser);
-        EditText passId = (EditText) findViewById(R.id.editPass);
-        String username = userId.getText().toString();
-        String password = passId.getText().toString();
+        Button login = (Button) findViewById(R.id.btnLogin);
 
-        boolean validationFlag = false;
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText userId = (EditText) findViewById(R.id.editUser);
+                EditText passId = (EditText) findViewById(R.id.editPass);
+                String username = userId.getText().toString();
+                String password = passId.getText().toString();
 
-        if(!username.isEmpty() && !password.isEmpty())
-        {
-            if (username.equals("Admin") && password.equals("Admin"))
-            {
-                validationFlag = true;
+                // Check for empty input
+                if (!username.isEmpty() && !password.isEmpty()) {
+                    // Redirect to home page if user and pass match
+                    if (username.equals("Admin") && password.equals("Admin")) {
+                        Intent redirect = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(redirect);
+                    } else {
+                        dialogPrompt("Invalid username or password.");
+                    }
+                } else {
+                    dialogPrompt("Missing input detected.");
+                }
+
             }
+        });
 
-        }
-
-        if(!validationFlag) {
-            checkCredentials();
-        }
-        else {
-            //reDirectToHomePage();
-        }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,12 +73,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void checkCredentials()
-    {
-        AlertDialog alert = new AlertDialog.Builder(MainActivity.this).create();
-        alert.setTitle("Error");
-        alert.setMessage("Invalid Username or Password");
-        alert.show();
+    // Dialog function to notify user
+    public void dialogPrompt(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setCancelable(true);
+        builder.create().show();
     }
+
 
 }
